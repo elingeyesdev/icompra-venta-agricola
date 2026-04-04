@@ -1,0 +1,24 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Role; //agregamos los permisos del seeder.
+
+class RoleSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        //
+
+        Role::firstOrCreate(['name'=>'administrador']); //creamos los roles que requerimos.
+        Role::firstOrCreate(['name'=>'usuario']);
+
+        
+        
+    }
+}
