@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RoleController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -17,8 +18,14 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/roles', function () {
+/*Route::get('/roles', function () {
     return view('roles');
+});*/
+
+
+//aqui agregamos una ruta.
+Route::middleware(['auth'])->group(function () {
+    Route::resource('roles', RoleController::class);
 });
 
 require __DIR__.'/auth.php';
