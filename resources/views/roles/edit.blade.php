@@ -8,7 +8,7 @@
     <div class="py-12">
         <div class="max-w-xl mx-auto sm:px-6 lg:px-8">
 
-            <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg p-6">
+            <div class="bg-green-800 shadow-sm sm:rounded-lg p-6">
 
                 <form action="{{ route('roles.update', $role->id) }}" method="POST">
                     @csrf
@@ -22,9 +22,9 @@
                     <button class="bg-blue-500 text-white px-4 py-2 rounded">
                         Actualizar
                     </button>
-
+                    
                     <a href="{{ route('roles.index') }}"
-                        class="ml-2 bg-gray-500 text-white px-4 py-2 rounded">
+                        class="ml-2 bg-blue-500 text-white px-4 py-2 rounded">
                         Volver
                     </a>
                 </form>
