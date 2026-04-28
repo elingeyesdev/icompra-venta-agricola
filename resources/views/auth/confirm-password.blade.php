@@ -16,7 +16,7 @@
 
             <x-text-input
                 id="password"
-                class="block mt-1 w-full rounded-lg border-green-300 focus:border-green-600 focus:ring-green-600"
+                class="block mt-1 w-full rounded-lg"
                 type="password"
                 name="password"
                 required autocomplete="current-password"

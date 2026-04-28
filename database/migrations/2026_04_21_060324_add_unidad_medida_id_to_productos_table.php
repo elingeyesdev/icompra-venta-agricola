@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('proveedor', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::table('productos', function (Blueprint $table) {
+            //
+            $table->foreignId('unidad_medida_id')->after('categoria_id')->nullable()->constrained();
         });
     }
 
@@ -22,6 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('proveedor');
+        Schema::table('productos', function (Blueprint $table) {
+            //
+        });
     }
 };
