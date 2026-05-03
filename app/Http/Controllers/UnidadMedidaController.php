@@ -15,12 +15,24 @@ class UnidadMedidaController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request): View
-    {
-        $unidadMedidas = UnidadMedida::paginate();
+{
+    $buscar = $request->input('buscar');
 
-        return view('unidad-medida.index', compact('unidadMedidas'))
-            ->with('i', ($request->input('page', 1) - 1) * $unidadMedidas->perPage());
+    $query = UnidadMedida::query();
+
+    if (!empty($buscar)) {
+        $query->where(function ($q) use ($buscar) {
+            $q->where('nombre', 'LIKE', "%$buscar%")
+              ->orWhere('abreviatura', 'LIKE', "%$buscar%")
+              ->orWhere('estado', 'LIKE', "%$buscar%");
+        });
     }
+
+    $unidadMedidas = $query->paginate()->withQueryString();
+
+    return view('unidad-medida.index', compact('unidadMedidas'))
+        ->with('i', ($request->input('page', 1) - 1) * $unidadMedidas->perPage());
+}
 
     /**
      * Show the form for creating a new resource.

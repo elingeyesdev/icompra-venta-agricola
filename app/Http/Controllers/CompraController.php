@@ -15,11 +15,27 @@ use Illuminate\View\View;
 class CompraController extends Controller
 {
     public function index(Request $request): View
-    {
-        $compras = Compra::paginate();
-        return view('compra.index', compact('compras'))
-            ->with('i', ($request->input('page', 1) - 1) * $compras->perPage());
+{
+    $buscar = $request->input('buscar');
+
+    $query = Compra::with('proveedore'); 
+
+    if (!empty($buscar)) {
+        $query->where(function ($q) use ($buscar) {
+            $q->where('fecha_compra', 'LIKE', "%$buscar%")
+              ->orWhere('total_compra', 'LIKE', "%$buscar%")
+              ->orWhere('estado', 'LIKE', "%$buscar%")
+              ->orWhereHas('proveedore', function ($q2) use ($buscar) {
+                  $q2->where('nombre', 'LIKE', "%$buscar%");
+              });
+        });
     }
+
+    $compras = $query->paginate()->withQueryString();
+
+    return view('compra.index', compact('compras'))
+        ->with('i', ($request->input('page', 1) - 1) * $compras->perPage());
+}
 
     public function create(): View
     {

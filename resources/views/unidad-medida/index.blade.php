@@ -11,6 +11,27 @@
                 </a>
             </div>
 
+            <form action="{{ route('unidad-medidas.index') }}" method="GET" class="mb-4 flex gap-2">
+
+    <input type="text" name="buscar"
+        value="{{ request('buscar') }}"
+        placeholder="Buscar unidad..."
+        class="w-full px-3 py-2 rounded border">
+
+    <button type="submit"
+        class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded">
+        Buscar
+    </button>
+
+    @if(request('buscar'))
+        <a href="{{ route('unidad-medidas.index') }}"
+            class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">
+            Limpiar
+        </a>
+    @endif
+
+</form>
+
             @if ($message = Session::get('success'))
                 <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4 shadow-sm">
                     <p>{{ $message }}</p>

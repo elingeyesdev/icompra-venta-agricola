@@ -7,10 +7,16 @@
 
         <div class="bg-green-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
 
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-white text-2xl font-bold">Gestión de Roles</h2>
+                <a href="{{ route('roles.create') }}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-xl transition">
+                     Crear rol
+                </a>
+            </div>
+
             <!-- Buscador -->
             <form method="GET" action="{{ route('roles.index') }}" class="mb-4 flex gap-2">
                 <input type="text" name="buscar" value="{{ $buscar ?? '' }}"
-                    placeholder="Buscar rol..."
                     class="border rounded px-3 py-2 w-full">
 
                 <button class="bg-blue-500 text-white px-4 py-2 rounded">
@@ -21,14 +27,6 @@
                     Limpiar
                 </a>
             </form>
-
-            <!-- Botón crear -->
-            <div class="mb-4">
-                <a href="{{ route('roles.create') }}"
-                    class="bg-green-500 text-white px-4 py-2 rounded">
-                    + Crear Rol
-                </a>
-            </div>
 
             <!-- Mensaje -->
             @if(session('success'))

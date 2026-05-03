@@ -15,12 +15,23 @@ class CategoriaController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request): View
-    {
-        $categorias = Categoria::paginate();
+{
+    $buscar = $request->input('buscar');
 
-        return view('categoria.index', compact('categorias'))
-            ->with('i', ($request->input('page', 1) - 1) * $categorias->perPage());
+    $query = Categoria::query();
+
+    if (!empty($buscar)) {
+        $query->where(function ($q) use ($buscar) {
+            $q->where('nombre', 'LIKE', "%$buscar%")
+              ->orWhere('estado', 'LIKE', "%$buscar%");
+        });
     }
+
+    $categorias = $query->paginate()->withQueryString();
+
+    return view('categoria.index', compact('categorias'))
+        ->with('i', ($request->input('page', 1) - 1) * $categorias->perPage());
+}
 
     /**
      * Show the form for creating a new resource.

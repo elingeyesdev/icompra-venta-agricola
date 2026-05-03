@@ -35,7 +35,7 @@
                                         <span class="block text-gray-900 font-bold uppercase text-sm group-hover:text-green-800">
                                             {{ $role->name }}
                                         </span>
-                                        <span class="block text-gray-900 text-xs ">
+                                        <span class="block text-gray-500 text-xs ">
                                             Activa las funciones de {{ strtolower($role->name) }}
                                         </span>
                                     </div>

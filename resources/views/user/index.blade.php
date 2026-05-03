@@ -8,9 +8,25 @@
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-white text-2xl font-bold italic">Gestión de Usuarios</h2>
                 <a href="{{ route('users.create') }}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-xl transition">
-                    + Nuevo Usuario
+                     Nuevo Usuario
                 </a>
             </div>
+
+            <form action="{{ route('users.index') }}" method="GET" class="mb-4 flex gap-2">
+    
+    <input type="text" name="buscar"
+        value="{{ request('buscar') }}"
+        class="w-full px-3 py-2 rounded border">
+
+    <button type="submit"
+        class="bg-yellow-500 text-white px-4 py-2 rounded">
+        Buscar
+    </button>
+    <a href="{{ route('users.index') }}" class="bg-red-500 text-white px-4 py-2 rounded">
+                    Limpiar
+                </a>
+
+</form>
 
             <div class="overflow-hidden rounded-xl">
                 <table class="w-full bg-white text-center">

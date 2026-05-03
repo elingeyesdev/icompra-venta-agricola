@@ -2,14 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail; /*interfaz que le indica al sistema que 
-el usuario debe verificar su correo electrónico antes de acceder*/
+use Illuminate\Contracts\Auth\MustVerifyEmail; 
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
-class User extends Authenticatable implements MustVerifyEmail //agregar el implemento 
+class User extends Authenticatable implements MustVerifyEmail  
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable,HasRoles;
