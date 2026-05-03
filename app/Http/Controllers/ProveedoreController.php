@@ -15,12 +15,25 @@ class ProveedoreController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request): View
-    {
-        $proveedores = Proveedore::paginate();
+{
+    $buscar = $request->input('buscar');
 
-        return view('proveedore.index', compact('proveedores'))
-            ->with('i', ($request->input('page', 1) - 1) * $proveedores->perPage());
+    $query = Proveedore::query();
+
+    if ($buscar) {
+        $query->where(function ($q) use ($buscar) {
+            $q->where('nombre', 'LIKE', "%$buscar%")
+              ->orWhere('correo', 'LIKE', "%$buscar%")
+              ->orWhere('telefono', 'LIKE', "%$buscar%")
+              ->orWhere('razon_social', 'LIKE', "%$buscar%");
+        });
     }
+
+    $proveedores = $query->paginate();
+
+    return view('proveedore.index', compact('proveedores'))
+        ->with('i', ($request->input('page', 1) - 1) * $proveedores->perPage());
+}
 
     /**
      * Show the form for creating a new resource.
@@ -50,7 +63,7 @@ class ProveedoreController extends Controller
     {
         $proveedore = Proveedore::find($id);
 
-        return view('proveedore.show', compact('proveedore'));
+        return view('proveedores.show', compact('proveedore'));
     }
 
     /**

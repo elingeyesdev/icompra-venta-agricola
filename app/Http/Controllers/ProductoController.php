@@ -15,12 +15,28 @@ class ProductoController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request): View
-    {
-        $productos = Producto::paginate();
+{
+    $buscar = $request->input('buscar');
 
-        return view('producto.index', compact('productos'))
-            ->with('i', ($request->input('page', 1) - 1) * $productos->perPage());
+    $query = Producto::with('categoria'); // importante
+
+    if (!empty($buscar)) {
+        $query->where(function ($q) use ($buscar) {
+            $q->where('nombre', 'LIKE', "%$buscar%")
+              ->orWhere('precio', 'LIKE', "%$buscar%")
+              ->orWhere('stock', 'LIKE', "%$buscar%")
+              ->orWhere('estado', 'LIKE', "%$buscar%")
+              ->orWhereHas('categoria', function ($q2) use ($buscar) {
+                  $q2->where('nombre', 'LIKE', "%$buscar%");
+              });
+        });
     }
+
+    $productos = $query->paginate()->withQueryString();
+
+    return view('producto.index', compact('productos'))
+        ->with('i', ($request->input('page', 1) - 1) * $productos->perPage());
+}
 
     /**
      * Show the form for creating a new resource.

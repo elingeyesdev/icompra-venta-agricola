@@ -15,9 +15,26 @@
 
                 <a href="{{ route('proveedores.create') }}"
                     class="bg-blue-500 text-white px-4 py-2 rounded">
-                    + Nuevo Proveedor
+                     Nuevo Proveedor
                 </a>
             </div>
+
+            <form action="{{ route('proveedores.index') }}" method="GET" class="mb-4 flex gap-2">
+    
+    <input type="text" name="buscar"
+        value="{{ request('buscar') }}"
+        class="w-full px-3 py-2 rounded border">
+
+    <button type="submit"
+        class="bg-yellow-500 text-white px-4 py-2 rounded">
+        Buscar
+    </button>
+    <a href="{{ route('proveedores.index') }}" class="bg-red-500 text-white px-4 py-2 rounded">
+                    Limpiar
+                </a>
+    
+
+</form>
 
             <!-- MENSAJE -->
             @if ($message = Session::get('success'))

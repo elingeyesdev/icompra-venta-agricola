@@ -12,9 +12,28 @@
 
                 <a href="{{ route('compras.create') }}"
                     class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded transition-colors">
-                    + Nueva Compra
+                     Nueva Compra
                 </a>
             </div>
+
+            <form action="{{ route('compras.index') }}" method="GET" class="mb-4 flex gap-2">
+
+    <input type="text" name="buscar"
+        value="{{ request('buscar') }}"
+        placeholder="Buscar por proveedor, fecha o estado..."
+        class="w-full px-3 py-2 rounded border">
+
+    <button type="submit"
+        class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded">
+        Buscar
+    </button>
+
+    <a href="{{ route('compras.index') }}"
+        class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">
+        Limpiar
+    </a>
+
+</form>
 
             <div class="overflow-hidden rounded-md shadow-sm">
                 <table class="w-full bg-white">

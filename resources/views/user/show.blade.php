@@ -24,7 +24,7 @@
                     </div>
 
                     <div class="flex flex-col">
-                        <span class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Fecha de Ingreso</span>
+                        <span class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Fecha del Ingreso</span>
                         <span class="text-lg text-gray-600">{{ $user->created_at->format('d/m/Y - H:i') }}</span>
                     </div>
                 </div>

@@ -15,9 +15,30 @@
 
                 <a href="{{ route('categorias.create') }}"
                     class="bg-blue-500 text-white px-4 py-2 rounded">
-                    + Nueva Categoría
+                     Nueva Categoría
                 </a>
             </div>
+
+            <form action="{{ route('categorias.index') }}" method="GET" class="mb-4 flex gap-2">
+
+    <input type="text" name="buscar"
+        value="{{ request('buscar') }}"
+        placeholder="Buscar categoría..."
+        class="w-full px-3 py-2 rounded border">
+
+    <button type="submit"
+        class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded">
+        Buscar
+    </button>
+
+    @if(request('buscar'))
+        <a href="{{ route('categorias.index') }}"
+            class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">
+            Limpiar
+        </a>
+    @endif
+
+</form>
 
             <!-- MENSAJE -->
             @if ($message = Session::get('success'))

@@ -12,9 +12,30 @@
 
                 <a href="{{ route('productos.create') }}"
                     class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition font-medium">
-                    + Nuevo Producto
+                     Nuevo Producto
                 </a>
             </div>
+
+            <form action="{{ route('productos.index') }}" method="GET" class="mb-4 flex gap-2">
+
+    <input type="text" name="buscar"
+        value="{{ request('buscar') }}"
+        placeholder="Buscar producto, categoría, precio..."
+        class="w-full px-3 py-2 rounded border">
+
+    <button type="submit"
+        class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded">
+        Buscar
+    </button>
+
+    @if(request('buscar'))
+        <a href="{{ route('productos.index') }}"
+            class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">
+            Limpiar
+        </a>
+    @endif
+
+</form>
 
             <div class="overflow-x-auto bg-white rounded-lg shadow">
                 <table class="w-full text-left">

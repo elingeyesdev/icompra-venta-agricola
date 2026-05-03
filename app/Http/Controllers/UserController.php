@@ -17,12 +17,23 @@ class UserController extends Controller
      * Muestra la lista de usuarios.
      */
     public function index(Request $request): View
-    {
-        $users = User::paginate();
+{
+    $buscar = $request->input('buscar');
 
-        return view('user.index', compact('users'))
-            ->with('i', ($request->input('page', 1) - 1) * $users->perPage());
+    $query = User::with('roles'); 
+
+    if (!empty($buscar)) {
+        $query->where(function ($q) use ($buscar) {
+            $q->where('name', 'LIKE', "%$buscar%")
+              ->orWhere('email', 'LIKE', "%$buscar%");
+        });
     }
+
+    $users = $query->paginate()->withQueryString();
+
+    return view('user.index', compact('users'))
+        ->with('i', ($request->input('page', 1) - 1) * $users->perPage());
+}
 
     /**
      * Muestra el formulario para crear un usuario.
@@ -98,7 +109,7 @@ class UserController extends Controller
             ->with('success', 'Usuario eliminado correctamente.');
     }
 
-    // ---  MÉTODOS PARA  ---
+    
 
     /**
      * Muestra el formulario especial para asignar un ROL.
