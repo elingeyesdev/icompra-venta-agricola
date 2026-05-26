@@ -5,12 +5,12 @@
 <div class="py-12">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
-        <div class="bg-green-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
+        <div class="bg-blue-900 overflow-hidden shadow-sm sm:rounded-lg p-6">
 
             <div class="flex justify-between items-center mb-6">
-                <h2 class="text-white text-2xl font-bold">Gestión de Roles</h2>
+                <h2 class="text-white text-2xl font-bold">Administrar Rol</h2>
                 <a href="{{ route('roles.create') }}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-xl transition">
-                     Crear rol
+                     Agregar rol
                 </a>
             </div>
 
@@ -19,13 +19,11 @@
                 <input type="text" name="buscar" value="{{ $buscar ?? '' }}"
                     class="border rounded px-3 py-2 w-full">
 
-                <button class="bg-blue-500 text-white px-4 py-2 rounded">
-                    Buscar
+                <button class="bg-yellow-500 text-white px-4 py-2 rounded">
+                    Buscar Rol
                 </button>
 
-                <a href="{{ route('roles.index') }}" class="bg-red-500 text-white px-4 py-2 rounded">
-                    Limpiar
-                </a>
+                
             </form>
 
             <!-- Mensaje -->
@@ -53,7 +51,7 @@
 
                                 <a href="{{ route('roles.edit', $role->id) }}"
                                     class="bg-yellow-400 px-3 py-1 rounded">
-                                    Editar
+                                    Modificar Rol
                                 </a>
 
                                 <form action="{{ route('roles.destroy', $role->id) }}" method="POST">
@@ -61,7 +59,7 @@
                                     @method('DELETE')
 
                                     <button class="bg-red-500 text-white px-3 py-1 rounded">
-                                        Eliminar
+                                        Eliminar Rol
                                     </button>
                                 </form>
 
