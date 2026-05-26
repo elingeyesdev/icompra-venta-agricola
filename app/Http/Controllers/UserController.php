@@ -99,7 +99,7 @@ class UserController extends Controller
     }
 
     /**
-     * Elimina al usuario del sistema.
+     * Elimina al usuario 
      */
     public function destroy($id): RedirectResponse
     {

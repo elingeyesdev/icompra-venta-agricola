@@ -3,12 +3,12 @@
 @section('content')
 <div class="py-12">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="bg-green-800 p-6 rounded-lg shadow-xl">
+        <div class="bg-blue-800 p-6 rounded-lg shadow-xl">
             
             <div class="flex justify-between items-center mb-6">
-                <h2 class="text-white text-2xl font-bold italic">Gestión de Usuarios</h2>
+                <h2 class="text-white text-2xl font-bold italic">Administrar de Usuarios</h2>
                 <a href="{{ route('users.create') }}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-xl transition">
-                     Nuevo Usuario
+                     Registrar Usuario
                 </a>
             </div>
 
@@ -20,11 +20,9 @@
 
     <button type="submit"
         class="bg-yellow-500 text-white px-4 py-2 rounded">
-        Buscar
+        Buscar Usuario
     </button>
-    <a href="{{ route('users.index') }}" class="bg-red-500 text-white px-4 py-2 rounded">
-                    Limpiar
-                </a>
+   
 
 </form>
 
@@ -57,10 +55,10 @@
         <i class="fas fa-key text-xs"></i> Rol
     </a>
                                 <a href="{{ route('users.show', $user->id) }}"  class="bg-blue-400 text-white px-3 py-1 rounded"> Ver</a>
-                                <a href="{{ route('users.edit', $user->id) }}"  class="bg-yellow-400 text-white px-3 py-1 rounded">Editar</a>
+                                <a href="{{ route('users.edit', $user->id) }}"  class="bg-yellow-400 text-white px-3 py-1 rounded">Modifcar Usuario</a>
                                 <form action="{{ route('users.destroy', $user->id) }}" method="POST" onsubmit="return confirm('¿Eliminar usuario?')">
                                     @csrf @method('DELETE')
-                                    <button  class="bg-red-600 text-white px-3 py-1 rounded">Eliminar</button>
+                                    <button  class="bg-red-600 text-white px-3 py-1 rounded">Eliminar Usuario</button>
                                 </form>
                             </td>
                         </tr>
