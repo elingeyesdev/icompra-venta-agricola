@@ -11,15 +11,18 @@ use App\Http\Controllers\Api\UnidadMedidaApiController;
 use App\Http\Controllers\Api\UserApiController;
 use App\Http\Controllers\Api\ProductoApiController;
 use App\Http\Controllers\Api\CompraApiController;
+use App\Models\User;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
+ Route::post('/login',[AuthController::class, 'login']);
 
+//Route::apiResource('usuario',UserApiController::class);
 
-Route::post('/login',[AuthController::class, 'login']);
+Route::apiResource('usuario', UserApiController::class);
 
-Route::apiResource('cliente',ClienteApiController::class);
+Route::apiResource('clientes',ClienteApiController::class);
 
 Route::apiResource('rol',RoleApiController::class);
 
@@ -29,8 +32,21 @@ Route::apiResource('proveedor',ProvedorApiController::class);
 
 Route::apiResource('unidad',UnidadMedidaApiController::class);
 
-Route::apiResource('usuario',UserApiController::class);
-
 Route::apiResource('producto',ProductoApiController::class);
 
 Route::apiResource('compra',CompraApiController::class);
+
+
+Route::middleware('auth:sanctum')->group(function () {
+
+
+});
+
+
+/*Route::get('/token', function () {
+
+    $user = User::find(1);
+
+    return $user->createToken('api-token')->plainTextToken;
+
+});*/

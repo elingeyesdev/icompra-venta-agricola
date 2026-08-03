@@ -49,7 +49,7 @@
 
             <!-- TABLA -->
             <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse">
+                <table class="w-full text-left text-black border-collapse">
 
                     <thead>
                         <tr class="bg-green-300">
