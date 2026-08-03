@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\ProductoApiController;
 use App\Http\Controllers\Api\CompraApiController;
 use App\Models\User;
 
+
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
@@ -37,16 +38,3 @@ Route::apiResource('producto',ProductoApiController::class);
 Route::apiResource('compra',CompraApiController::class);
 
 
-Route::middleware('auth:sanctum')->group(function () {
-
-
-});
-
-
-/*Route::get('/token', function () {
-
-    $user = User::find(1);
-
-    return $user->createToken('api-token')->plainTextToken;
-
-});*/

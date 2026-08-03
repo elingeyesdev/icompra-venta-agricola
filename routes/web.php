@@ -10,6 +10,9 @@ use App\Http\Controllers\CompraController;
 use App\Http\Controllers\UnidadMedidaController;
 use App\Http\Controllers\UserController;
 
+//consumo api :
+use App\Http\Controllers\Api\CategoriaConsumoController;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -40,9 +43,13 @@ Route::middleware('auth')->group(function () {
     Route::get('users/{user}/role', [UserController::class, 'editRole'])->name('users.edit-role');
     //
     Route::put('users/{user}/role', [UserController::class, 'updateRole'])->name('users.update-role');
+
+
+    
     
 });
-
+//consumo de la api: 
+    Route::resource('categoria-api', CategoriaConsumoController::class);
 
 
 require __DIR__.'/auth.php';
