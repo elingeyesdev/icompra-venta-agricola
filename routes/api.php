@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\UserApiController;
 use App\Http\Controllers\Api\ProductoApiController;
 use App\Http\Controllers\Api\CompraApiController;
 
+
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
@@ -34,3 +35,4 @@ Route::apiResource('usuario',UserApiController::class);
 Route::apiResource('producto',ProductoApiController::class);
 
 Route::apiResource('compra',CompraApiController::class);
+
