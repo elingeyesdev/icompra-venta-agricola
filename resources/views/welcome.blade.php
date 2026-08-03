@@ -17,7 +17,7 @@
             <div class="bg-white p-8 md:p-12 rounded-3xl shadow-2xl text-center">
                 
                 <div class="inline-block px-3 py-1 bg-green-100 text-green-700 text-xs font-bold uppercase rounded-full mb-4">
-                    Sistema de Gestión
+                        BIENVENIDO A 
                 </div>
                 
                 <h1 class="text-4xl font-bold text-gray-900 mb-8">
@@ -43,10 +43,6 @@
                         @endauth
                     @endif
                 </div>
-
-                <p class="mt-8 text-xs text-gray-400">
-                    © 2026 AgroDirecto
-                </p>
             </div>
         </main>
     </div>
