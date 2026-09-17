@@ -47,7 +47,11 @@ class CategoriaApiController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
-    {
-        return response()->json(['message'=>'Categoria eliminada']);
-    }
+{
+    $categoria = Categoria::destroy($id);
+
+    return response()->json([
+        'message'=>'Categoria eliminada'
+    ]);
+}
 }

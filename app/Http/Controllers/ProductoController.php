@@ -18,7 +18,7 @@ class ProductoController extends Controller
 {
     $buscar = $request->input('buscar');
 
-    $query = Producto::with('categoria'); // importante
+    $query = Producto::with('categoria');
 
     if (!empty($buscar)) {
         $query->where(function ($q) use ($buscar) {

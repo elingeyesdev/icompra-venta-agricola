@@ -16,11 +16,11 @@ class CategoriaController extends Controller
      */
     public function index(Request $request): View
 {
-    $buscar = $request->input('buscar');
+    $buscar = $request->input('buscar');  // crea una variable que guarda lo que el usuario escribe
 
-    $query = Categoria::query();
+    $query = Categoria::query(); 
 
-    if (!empty($buscar)) {
+    if (!empty($buscar)) { //prepara una consulta con los datos 
         $query->where(function ($q) use ($buscar) {
             $q->where('nombre', 'LIKE', "%$buscar%")
               ->orWhere('estado', 'LIKE', "%$buscar%");

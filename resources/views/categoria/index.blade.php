@@ -12,7 +12,7 @@
                 <h2 class="text-white text-xl font-semibold">
                     Categorías
                 </h2>
-
+                       <!--llama a el categoria create dentro de el controller --> 
                 <a href="{{ route('categorias.create') }}"
                     class="bg-blue-500 text-white px-4 py-2 rounded">
                      Nueva Categoría
@@ -53,7 +53,7 @@
 
                     <thead>
                         <tr class="bg-green-300">
-                            <th class="p-2 border">No</th>
+                            <th class="p-2 border">Nro</th>
                             <th class="p-2 border">Nombre</th>
                             <th class="p-2 border">Estado</th>
                             <th class="p-2 border">Acciones</th>

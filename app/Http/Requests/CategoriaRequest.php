@@ -21,7 +21,7 @@ class CategoriaRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        return [    //se encarga de lasreglas dentro de las variables
 			'nombre' => 'required|string',
 			'estado' => 'required|string',
         ];
