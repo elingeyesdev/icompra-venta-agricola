@@ -10,11 +10,15 @@ use App\Http\Controllers\CompraController;
 use App\Http\Controllers\UnidadMedidaController;
 use App\Http\Controllers\UserController;
 
-//consumo api :
+
 use App\Http\Controllers\Api\CategoriaConsumoController;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('/prueba-error-500', function () {
+    throw new \RuntimeException('Error de prueba');
 });
 
 Route::get('/dashboard', function () {
@@ -46,8 +50,8 @@ Route::middleware(['auth', 'role:administrador', 'no-store'])->group(function ()
 
     
 });
-//consumo de la api: 
-    Route::resource('categoria-api', CategoriaConsumoController::class);
+/* 
+    Route::resource('categoria-api', CategoriaConsumoController::class);*/
 
 
 require __DIR__.'/auth.php';
