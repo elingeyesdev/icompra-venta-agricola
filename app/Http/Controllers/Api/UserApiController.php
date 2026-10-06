@@ -5,7 +5,12 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Password;
+
 class UserApiController extends Controller
+
 
 {
     /**
@@ -21,8 +26,15 @@ class UserApiController extends Controller
      */
     public function store(Request $request)
     {
-        $user=User::create($request->all());
-        return response()->json($user,201);
+        $validated = $request->validate([
+    'name' => ['required', 'string', 'max:255'],
+    'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
+    'password' => ['required', 'string', Password::defaults()],
+]);
+
+$user = User::create($validated);
+
+return response()->json($user, 201);
     }
 
     /**
@@ -38,9 +50,24 @@ class UserApiController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $user =User::findOrFail($id);
-        $user->update($request->all());
-        return response()->json($user);
+        $user = User::findOrFail($id);
+
+$validated = $request->validate([
+    'name' => ['sometimes', 'required', 'string', 'max:255'],
+    'email' => [
+        'sometimes',
+        'required',
+        'string',
+        'email',
+        'max:255',
+        Rule::unique('users', 'email')->ignore($user->id),
+    ],
+    'password' => ['sometimes', 'required', 'string', Password::defaults()],
+]);
+
+$user->update($validated);
+
+return response()->json($user);
     }
 
     /**

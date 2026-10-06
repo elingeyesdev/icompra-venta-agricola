@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\ProductoRequest;
 use App\Models\Producto;
 
 class ProductoApiController extends Controller
@@ -19,12 +19,17 @@ class ProductoApiController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        $producto=Producto::create($request->all());
-        return response()->json($producto,201);
-    }
+   public function store(ProductoRequest $request)
+{
+    $datos = $request->validated();
 
+    // Igual que el formulario web, el producto inicia con stock cero.
+    $datos['stock'] = 0;
+
+    $producto = Producto::create($datos);
+
+    return response()->json($producto, 201);
+}
     /**
      * Display the specified resource.
      */
@@ -37,13 +42,13 @@ class ProductoApiController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        $producto=Producto::findOrFail($id);
-        $producto->update($request->all());
-        return response()->json($producto);
-    }
+    public function update(ProductoRequest $request, string $id)
+{
+    $producto = Producto::findOrFail($id);
+    $producto->update($request->validated());
 
+    return response()->json($producto);
+}
     /**
      * Remove the specified resource from storage.
      */
