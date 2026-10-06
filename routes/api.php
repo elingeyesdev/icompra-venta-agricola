@@ -17,24 +17,40 @@ use App\Models\User;
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
- Route::post('/login',[AuthController::class, 'login']);
+ Route::post('/login', [AuthController::class, 'login'])
+    ->middleware('no-store');
 
-//Route::apiResource('usuario',UserApiController::class);
+Route::middleware(['auth:sanctum', 'no-store'])->group(function () {
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
 
-Route::apiResource('usuario', UserApiController::class);
+    Route::apiResource('categoria', CategoriaApiController::class)
+        ->only(['index', 'show']);
 
-Route::apiResource('clientes',ClienteApiController::class);
+    Route::apiResource('producto', ProductoApiController::class)
+        ->only(['index', 'show']);
 
-Route::apiResource('rol',RoleApiController::class);
+    Route::apiResource('unidad', UnidadMedidaApiController::class)
+        ->only(['index', 'show']);
+});
 
-Route::apiResource('categoria',CategoriaApiController::class);
+// Administración: token Sanctum y rol administrador.
+Route::middleware(['auth:sanctum', 'role:administrador', 'no-store'])->group(function () {
+    Route::apiResource('usuario', UserApiController::class);
+    Route::apiResource('clientes', ClienteApiController::class);
+    Route::apiResource('rol', RoleApiController::class);
+    Route::apiResource('proveedor', ProvedorApiController::class);
+    Route::apiResource('compra', CompraApiController::class);
 
-Route::apiResource('proveedor',ProvedorApiController::class);
+    Route::apiResource('categoria', CategoriaApiController::class)
+        ->only(['store', 'update', 'destroy']);
 
-Route::apiResource('unidad',UnidadMedidaApiController::class);
+    Route::apiResource('producto', ProductoApiController::class)
+        ->only(['store', 'update', 'destroy']);
 
-Route::apiResource('producto',ProductoApiController::class);
-
-Route::apiResource('compra',CompraApiController::class);
+    Route::apiResource('unidad', UnidadMedidaApiController::class)
+        ->only(['store', 'update', 'destroy']);
+});
 
 

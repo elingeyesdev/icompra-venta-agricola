@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
+use App\Support\SecurityAudit;
+
 class AuthenticatedSessionController extends Controller
 {
     /**
@@ -36,6 +38,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
+        SecurityAudit::record('auth.logout');
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();

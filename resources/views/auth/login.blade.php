@@ -29,6 +29,7 @@
             <x-text-input
                 id="password"
                 class="block mt-1 w-full rounded-lg"
+                type="password"
                 name="password"
                 required autocomplete="current-password"
             />

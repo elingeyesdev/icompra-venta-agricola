@@ -14,10 +14,22 @@
     </div>
 
     <div>
-        <label class="block text-sm font-bold text-white mb-2 ">Contraseña</label>
-        <input type="password" name="password" 
-            class="w-full rounded-xl border-none text-gray-900 p-3 shadow-inner focus:ring-2 focus:ring-green-400"
-            autocomplete="new-password"
-            {{ isset($user->id) ? '' : 'required' }}>
-    </div>
+    <label class="block text-sm font-bold text-white mb-2">
+        Contraseña
+    </label>
+
+    <input
+        type="password"
+        name="password"
+        class="w-full rounded-xl border-none text-gray-900 p-3 shadow-inner focus:ring-2 focus:ring-green-400"
+        autocomplete="new-password"
+        {{ isset($user->id) ? '' : 'required' }}
+    >
+
+    <p class="text-white/80 text-xs mt-1">
+        Debe tener como mínimo 12 caracteres.
+    </p>
+
+    {!! $errors->first('password', '<p class="text-red-300 text-xs mt-1 font-bold">:message</p>') !!}
+</div>
 </div>

@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Password;
 
 class UserRequest extends FormRequest
 {
@@ -30,7 +31,9 @@ class UserRequest extends FormRequest
                 'max:255',
                 Rule::unique('users')->ignore($userId),
             ],
-            'password' => $userId ? 'nullable|min:8' : 'required|min:8',
+            'password' => $userId
+                ? ['nullable', 'string', Password::defaults()]
+                : ['required', 'string', Password::defaults()],
         ];
     }
 }
