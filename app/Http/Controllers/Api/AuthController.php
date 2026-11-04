@@ -12,13 +12,13 @@ class AuthController extends Controller
 {
     public function login(Request $request)
     {
-        // Validar que el usuario envíe los datos obligatorios
+
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);
 
-        // Intentar loguear al usuario
+        
         if (!Auth::attempt($request->only('email', 'password'))) {
     SecurityAudit::record('auth.login.failed');
 
@@ -26,16 +26,12 @@ class AuthController extends Controller
         'message' => 'Credenciales incorrectas'
     ], 401);
 }
-
-        // Si las credenciales son correctas, obtenemos al usuario
         $user = Auth::user();
         
-        // Creamos el token de Sanctum
         $token = $user->createToken('flutter')->plainTextToken;
 
         SecurityAudit::record('auth.login.success');
 
-        // Devolvemos la respuesta con el token
         return response()->json([
             'token' => $token,
             'user' => $user

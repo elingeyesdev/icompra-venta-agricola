@@ -11,11 +11,13 @@ return new class extends Migration
      */ 
     public function up(): void
     {
+         if (!Schema::hasTable('compra_producto')) {
         Schema::table('compra_producto', function (Blueprint $table) {
     $table->integer('cantidad');
     $table->decimal('precio', 10, 2);
     $table->decimal('subtotal', 10, 2)->nullable();
 });
+         }
     }
 
     /**

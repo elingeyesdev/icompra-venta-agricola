@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+         if (!Schema::hasTable('compras')) {
         Schema::create('compras', function (Blueprint $table) {
              $table->id();
             $table->foreignId('proveedor_id')->constrained('proveedores')->onDelete('cascade');
@@ -19,6 +20,7 @@ return new class extends Migration
             $table->integer('estado');
              $table->timestamps();
         });
+         }
     }
 
     /**

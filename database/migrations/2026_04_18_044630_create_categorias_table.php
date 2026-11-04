@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
+         if (!Schema::hasTable('equipos')) {
         Schema::create('categorias', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
             $table->string('estado');
             $table->timestamps();
         });
+         }
     }
 
     /**

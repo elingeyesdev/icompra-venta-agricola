@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+         if (!Schema::hasTable('proveedores')) {
         Schema::create('proveedores', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
@@ -21,6 +22,7 @@ return new class extends Migration
             $table->integer('estado');
             $table->timestamps();
         });
+         }
     }
 
     /**
