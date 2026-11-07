@@ -2,7 +2,7 @@
 # ==========================================
 # ETAPA 1: DEPENDENCIAS PHP
 # ==========================================
-FROM php:8.3-cli AS vendor_build
+FROM php:8.4-cli AS vendor_build
 
 WORKDIR /var/www/html
 
@@ -56,7 +56,7 @@ RUN npm run build
 # ==========================================
 # ETAPA 3: SERVIDOR DE PRODUCCION
 # ==========================================
-FROM php:8.3-apache AS production
+FROM php:8.4-apache AS production
 
 WORKDIR /var/www/html
 
