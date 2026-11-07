@@ -1,8 +1,10 @@
+
 <?php
 
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Http\Request;
 
 use Spatie\Permission\Middleware\RoleMiddleware;
 use App\Http\Middleware\NoStoreSensitiveResponses;
@@ -15,11 +17,23 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-    $middleware->alias([
-        'role' => RoleMiddleware::class,
-        'no-store' => NoStoreSensitiveResponses::class,
-    ]);
-})
+
+        // Confiar en el proxy de Render para reconocer HTTPS
+        $middleware->trustProxies(
+            at: '*',
+            headers: Request::HEADER_X_FORWARDED_FOR |
+                     Request::HEADER_X_FORWARDED_HOST |
+                     Request::HEADER_X_FORWARDED_PORT |
+                     Request::HEADER_X_FORWARDED_PROTO
+        );
+
+        // Alias de middleware personalizados
+        $middleware->alias([
+            'role' => RoleMiddleware::class,
+            'no-store' => NoStoreSensitiveResponses::class,
+        ]);
+    })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
-    })->create();
+    })
+    ->create();
