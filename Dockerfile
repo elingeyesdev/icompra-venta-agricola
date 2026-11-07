@@ -1,16 +1,17 @@
-# Usar la imagen oficial de PHP con Apache (ajusta a 8.1 o la versión que uses)
+# Usar la imagen oficial de PHP con Apache (PHP 8.3)
 FROM php:8.3-apache
 
-# Instalar dependencias del sistema necesarias para Laravel
+# Instalar dependencias del sistema, INCLUYENDO libzip-dev
 RUN apt-get update && apt-get install -y \
     libpng-dev \
     libonig-dev \
     libxml2-dev \
+    libzip-dev \
     zip \
     unzip \
     git \
     curl \
-    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
+    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
 
 # Habilitar mod_rewrite de Apache para las rutas amigables de Laravel
 RUN a2enmod rewrite
@@ -28,6 +29,9 @@ WORKDIR /var/www/html
 
 # Copiar los archivos de tu proyecto al contenedor (incluyendo composer.json)
 COPY . .
+
+# Dar memoria ilimitada a Composer para evitar que el proceso muera por falta de RAM
+ENV COMPOSER_MEMORY_LIMIT=-1
 
 # Instalar las dependencias de PHP para producción
 RUN composer install --no-interaction --optimize-autoloader --no-dev
