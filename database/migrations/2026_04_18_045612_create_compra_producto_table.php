@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-         if (!Schema::hasTable('compra_producto')) {
+         
         Schema::create('compra_producto', function (Blueprint $table) {
             $table->id();
 
@@ -24,7 +24,7 @@ return new class extends Migration
 
 $table->timestamps();
         });
-         }
+    
     }
 
     /**

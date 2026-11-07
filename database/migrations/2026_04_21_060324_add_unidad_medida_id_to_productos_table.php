@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-         if (!Schema::hasTable('productos')) {
+         
         Schema::table('productos', function (Blueprint $table) {
             //
             $table->foreignId('unidad_medida_id')->after('categoria_id')->nullable()->constrained();
         });
-         }
+        
     }
 
     /**

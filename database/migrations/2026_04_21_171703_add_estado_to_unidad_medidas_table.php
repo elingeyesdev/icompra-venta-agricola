@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-         if (!Schema::hasTable('unidad_medidas')) {
         Schema::table('unidad_medidas', function (Blueprint $table) {
             //
 
             $table->integer('estado')->default(1)->after('abreviatura');
-        });
-         }
+        }); 
     }
 
     /**

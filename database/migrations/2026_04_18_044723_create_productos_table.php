@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-         if (!Schema::hasTable('productos')) {
+         
         Schema::create('productos', function (Blueprint $table) {
             $table->id();
             $table->foreignId ('categoria_id')->constrained('categorias')->onDelete('cascade');
@@ -22,7 +22,7 @@ return new class extends Migration
             $table->integer('estado');
             $table->timestamps();
         });
-         }
+         
     }
 
     /**

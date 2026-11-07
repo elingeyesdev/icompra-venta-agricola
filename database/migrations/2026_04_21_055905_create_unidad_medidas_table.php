@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-         if (!Schema::hasTable('unidad_medidas')) {
+         
         Schema::create('unidad_medidas', function (Blueprint $table) {
             $table->id();
             $table->string('nombre', 50);
             $table->string('abreviatura', 10);
             $table->timestamps();
         });
-         }
+         
     }
 
     /**
