@@ -30,7 +30,24 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+          $user = $request->user();
+
+        // Administrador: acceso al dashboard.
+        if ($user->hasRole('administrador')) {
+            return redirect()->intended(route('dashboard', absolute: false));
+        }
+
+        // Vendedor: no puede entrar al dashboard administrativo.
+        if ($user->hasRole('vendedor')) {
+            return redirect()->route('profile.edit');
+        }
+
+        // Usuario sin rol asignado.
+       Auth::logout();
+
+return redirect()->route('login')->withErrors([
+    'email' => 'No puedes ingresar. Tu cuenta no tiene un rol asignado. Contacta al administrador.'
+]);
     }
 
     /**
