@@ -1,11 +1,7 @@
-# Usar la imagen oficial de PHP con FPM (FastCGI Process Manager)
-FROM php:8.2-fpm
+# 1. Usar imagen con Apache integrado
+FROM php:8.2-apache
 
-# Argumentos definidos en docker-compose.yml (opcional para permisos)
-ARG user=myuser
-ARG uid=1000
-
-# Instalar dependencias del sistema requeridas por Laravel
+# 2. Instalar dependencias del sistema requeridas
 RUN apt-get update && apt-get install -y \
     git \
     curl \
@@ -16,37 +12,40 @@ RUN apt-get update && apt-get install -y \
     unzip \
     libzip-dev
 
-# Limpiar caché de apt para reducir el tamaño de la imagen
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Instalar extensiones de PHP necesarias para Laravel y Bases de Datos
+# 3. Instalar extensiones PHP necesarias para Laravel
 RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
 
-# Obtener la última versión de Composer (Gestor de dependencias de PHP)
+# 4. Habilitar mod_rewrite de Apache para las URLs limpias de Laravel
+RUN a2enmod rewrite
+
+# 5. Instalar Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Crear un usuario del sistema para ejecutar comandos de Composer y Artisan
-RUN useradd -G www-data,root -u $uid -d /home/$user $user
-RUN mkdir -p /home/$user/.composer && \
-    chown -R $user:$user /home/$user
+# 6. Directorio de trabajo
+WORKDIR /var/www/html
 
-# Establecer el directorio de trabajo dentro del contenedor
-WORKDIR /var/www
+# 7. Copiar el código del proyecto
+COPY . /var/www/html
 
-# Copiar los archivos de la aplicación al contenedor
-COPY . /var/www
+# 8. Configurar Apache para apuntar a la carpeta /public de Laravel
+ENV APACHE_DOCUMENT_ROOT /var/www/html/public
+RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
+RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
-# Cambiar los permisos de los directorios de caché y almacenamiento de Laravel
-RUN chown -R $user:www-data /var/www/storage \
-    && chown -R $user:www-data /var/www/bootstrap/cache \
-    && chmod -R 775 /var/www/storage \
-    && chmod -R 775 /var/www/bootstrap/cache
+# 9. Instalar dependencias de Laravel
+RUN composer install --no-dev --optimize-autoloader
 
-# Cambiar al usuario no root creado
-USER $user
+# 10. Asignar permisos al usuario de Apache (www-data)
+RUN chown -R www-data:www-data /var/www/html/storage \
+    && chown -R www-data:www-data /var/www/html/bootstrap/cache \
+    && chmod -R 775 /var/www/html/storage \
+    && chmod -R 775 /var/www/html/bootstrap/cache
 
-# Exponer el puerto 9000 para PHP-FPM
-EXPOSE 9000
+# 11. Configurar el puerto dinámico para plataformas en la nube
+ENV PORT=8080
+RUN sed -s -i -e "s/80/\${PORT}/" /etc/apache2/ports.conf
+RUN sed -s -i -e "s/*:80/*:\${PORT}/" /etc/apache2/sites-available/*.conf
 
-# Comando por defecto al iniciar el contenedor
-CMD ["php-fpm"]
+EXPOSE ${PORT}
