@@ -23,7 +23,7 @@ Route::get('/prueba-error-500', function () {
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+})->middleware(['auth', 'role:administrador'])->name('dashboard');
 
 Route::middleware(['auth', 'no-store'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
