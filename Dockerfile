@@ -8,7 +8,7 @@ WORKDIR /var/www/html
 
 # Instalar extensiones PHP necesarias
 RUN apt-get update && apt-get install -y \
-    git unzip libicu-dev libzip-dev \
+    git unzip libicu-dev libzip-dev libonig-dev \
     libpng-dev libjpeg62-turbo-dev libfreetype6-dev \
     && docker-php-ext-configure gd \
        --with-freetype --with-jpeg \
@@ -62,7 +62,7 @@ WORKDIR /var/www/html
 
 # Instalar extensiones PHP
 RUN apt-get update && apt-get install -y \
-    libicu-dev libzip-dev \
+    libicu-dev libzip-dev libonig-dev \
     libpng-dev libjpeg62-turbo-dev libfreetype6-dev \
     && docker-php-ext-configure gd \
        --with-freetype --with-jpeg \
